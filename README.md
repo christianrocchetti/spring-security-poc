@@ -1,1 +1,1 @@
-spring-sicurity
+spring-security

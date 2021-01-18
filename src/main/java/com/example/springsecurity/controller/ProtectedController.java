@@ -1,15 +1,15 @@
-package com.example.springsicurity.controller;
+package com.example.springsecurity.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/unprotected")
-public class UnprotectedController {
+@RequestMapping("/protected")
+public class ProtectedController {
 
     @GetMapping
-    public String unprotectedEndpointExample() {
-        return "I'm unprotected";
+    public String protectedEndpointExample() {
+        return "I'm protected";
     }
 }

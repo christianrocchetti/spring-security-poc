@@ -1,4 +1,4 @@
-package com.example.springsicurity.component;
+package com.example.springsecurity.component;
 
 import org.springframework.boot.actuate.endpoint.annotation.*;
 import org.springframework.stereotype.Component;
