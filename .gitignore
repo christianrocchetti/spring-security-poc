@@ -1,3 +1,17 @@
+# IDE
+.idea
+*.iml
+
+# compilation
+target
+
+# swap files
+*.swap
+*.sw
+*.swo
+*.swp
+
+
 # Compiled class file
 *.class
 
