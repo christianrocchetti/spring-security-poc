@@ -40,6 +40,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                 .ignoringAntMatchers("/actuator/**")
                 .and()
+                .formLogin()
+                .failureHandler(authenticationFailureHandler)
+                .successHandler(refererAuthenticationSuccessHandler)
+                .and()
                 .logout()
                 .logoutSuccessHandler(customLogoutSuccessHandler);
 
