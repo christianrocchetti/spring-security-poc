@@ -22,13 +22,11 @@ public class ActuatorCustom {
         return test.get(name);
     }
 
-    // .csrf().disable() for enable @WriteOperation
     @WriteOperation
     public void configureFeature(@Selector String name, Boolean feature) {
         test.put(name, feature);
     }
 
-    // .csrf().disable() for enable @DeleteOperation
     @DeleteOperation
     public void deleteFeature(@Selector String name) {
         test.remove(name);

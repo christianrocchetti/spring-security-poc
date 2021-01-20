@@ -1,5 +1,9 @@
 package com.example.springsecurity.configuration;
 
+import com.example.springsecurity.component.CustomAuthenticationFailureHandler;
+import com.example.springsecurity.component.CustomLogoutSuccessHandler;
+import com.example.springsecurity.component.CustomAuthenticationSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,9 +14,16 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
+
+
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final CustomAuthenticationFailureHandler authenticationFailureHandler;
+    private final CustomLogoutSuccessHandler customLogoutSuccessHandler;
+    private final CustomAuthenticationSuccessHandler refererAuthenticationSuccessHandler;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -21,12 +32,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/actuator/**").hasAnyRole("ADMIN")
                 .antMatchers("/protected").hasAnyRole("ADMIN", "USER")
+
                 .and()
                 .logout().permitAll()
                 .and()
                 // Preventing csrf -> https://owasp.org/www-community/attacks/csrf
                 .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                .ignoringAntMatchers("/actuator/**");
+                .ignoringAntMatchers("/actuator/**")
+                .and()
+                .logout()
+                .logoutSuccessHandler(customLogoutSuccessHandler);
+
 
         super.configure(http);
     }
@@ -49,4 +65,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public PasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }
